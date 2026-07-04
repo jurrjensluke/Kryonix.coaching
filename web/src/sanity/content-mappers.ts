@@ -1,3 +1,5 @@
+import type {ProductPageViewModel} from '@/domain/content/product-page-view-model'
+
 type SanityAction = {
   label?: string | null
   href?: string | null
@@ -33,30 +35,6 @@ export type SanityProductPage = {
   seo?: SanitySeo | null
 } | null
 
-export type ProductPageViewData = {
-  hero: {
-    title: string
-    text: string
-    primaryAction?: {label: string; href: string}
-    secondaryAction?: {label: string; href: string}
-  }
-  features: Array<{
-    key: string
-    title: string
-    summary: string
-    status: string
-  }>
-  faqs: Array<{
-    key: string
-    question: string
-    answer: string
-  }>
-  seo: {
-    title: string
-    description: string
-  }
-}
-
 export type SanityHelpArticle = {
   title?: string | null
   slug?: string | null
@@ -73,7 +51,7 @@ export type HelpArticleListItem = {
   summary: string
 }
 
-const fallbackProductPage: ProductPageViewData = {
+const fallbackProductPage: ProductPageViewModel = {
   hero: {
     title: 'Coach platform content connected to Sanity.',
     text:
@@ -109,7 +87,7 @@ const fallbackProductPage: ProductPageViewData = {
   },
 }
 
-export function mapProductPage(page: SanityProductPage): ProductPageViewData {
+export function mapProductPage(page: SanityProductPage): ProductPageViewModel {
   if (!page) {
     return fallbackProductPage
   }
