@@ -6,6 +6,8 @@ Sanity is the content operations layer for Kryonix Coaching. It should power edi
 
 Sanity is not the coaching platform database. Live coach/client data remains in Firebase and server-owned payment providers.
 
+Kryonix Coaching uses the existing Kryonix RC1 Firebase project (`kryonix-rc`) so coach auth, custom claims, Firestore contracts, and the iOS app stay on the same backend identity and data boundary.
+
 ## Belongs In Sanity
 
 - Public product pages.
@@ -38,6 +40,7 @@ Sanity
   Editorial CMS assets
 
 Firebase / Functions
+  Project: kryonix-rc
   Auth and custom claims
   Coaches and clients
   Programmes and assignments
