@@ -30,3 +30,26 @@ export const PRODUCT_PAGE_QUERY = defineQuery(`*[
   },
   seo
 }`)
+
+export const HELP_ARTICLES_QUERY = defineQuery(`*[
+  _type == "helpArticle" &&
+  defined(slug.current)
+] | order(category asc, title asc){
+  title,
+  "slug": slug.current,
+  category,
+  audience,
+  summary
+}`)
+
+export const HELP_ARTICLE_QUERY = defineQuery(`*[
+  _type == "helpArticle" &&
+  slug.current == $slug
+][0]{
+  title,
+  "slug": slug.current,
+  category,
+  audience,
+  summary,
+  body
+}`)

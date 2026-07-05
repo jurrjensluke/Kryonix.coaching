@@ -23,6 +23,8 @@ type SanitySeo = {
   description?: string | null
 }
 
+type PortableTextBlock = Record<string, unknown>
+
 export type SanityProductPage = {
   title?: string | null
   slug?: string | null
@@ -41,6 +43,7 @@ export type SanityHelpArticle = {
   category?: string | null
   audience?: string | null
   summary?: string | null
+  body?: PortableTextBlock[] | null
 }
 
 export type HelpArticleListItem = {
@@ -49,6 +52,11 @@ export type HelpArticleListItem = {
   category: string
   audience: string
   summary: string
+}
+
+export type HelpArticleDetail = HelpArticleListItem & {
+  body: PortableTextBlock[]
+  missing?: boolean
 }
 
 const fallbackProductPage: ProductPageViewModel = {
@@ -133,6 +141,29 @@ export function mapHelpArticleList(articles: SanityHelpArticle[]): HelpArticleLi
     )
 }
 
+export function mapHelpArticleDetail(article: SanityHelpArticle | null): HelpArticleDetail {
+  if (!article || !isValidHelpArticle(article)) {
+    return {
+      title: 'Help article not found',
+      slug: '',
+      category: '',
+      audience: '',
+      summary: '',
+      body: [],
+      missing: true,
+    }
+  }
+
+  return {
+    title: article.title,
+    slug: article.slug,
+    category: article.category,
+    audience: article.audience,
+    summary: article.summary ?? '',
+    body: article.body ?? [],
+  }
+}
+
 function mapAction(action: SanityAction | null | undefined) {
   if (!action?.label || !action.href) {
     return undefined
@@ -144,7 +175,9 @@ function mapAction(action: SanityAction | null | undefined) {
   }
 }
 
-function isValidHelpArticle(article: SanityHelpArticle): article is HelpArticleListItem {
+function isValidHelpArticle(
+  article: SanityHelpArticle,
+): article is SanityHelpArticle & HelpArticleListItem {
   return Boolean(
     article.title &&
       article.slug &&
