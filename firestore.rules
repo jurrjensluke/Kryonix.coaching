@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isCoach(coachId) {
+      return signedIn()
+        && request.auth.token.coach == true
+        && request.auth.token.coachId == coachId;
+    }
+
+    function isVisibleCoachClientRelationship() {
+      return resource.data.status in ['active', 'pending'];
+    }
+
+    match /coaches/{coachId} {
+      allow read: if isCoach(coachId);
+      allow write: if false;
+    }
+
+    match /coachEntitlements/{coachId} {
+      allow read: if isCoach(coachId);
+      allow write: if false;
+    }
+
+    match /coachClients/{relationshipId} {
+      allow read: if isCoach(resource.data.coachId)
+        && isVisibleCoachClientRelationship();
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
