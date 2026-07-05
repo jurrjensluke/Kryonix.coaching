@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {resolveFirebaseClientConfig} from './client-config'
+import {getDefaultFirebaseClientEnv, resolveFirebaseClientConfig} from './client-config'
 
 describe('Firebase client config', () => {
   it('resolves the Kryonix RC1 Firebase web config from public environment values', () => {
@@ -35,6 +35,18 @@ describe('Firebase client config', () => {
     })
 
     expect(config.measurementId).toBeUndefined()
+  })
+
+  it('exposes default client env keys through direct Next public env references', () => {
+    expect(Object.keys(getDefaultFirebaseClientEnv()).sort()).toEqual([
+      'NEXT_PUBLIC_FIREBASE_API_KEY',
+      'NEXT_PUBLIC_FIREBASE_APP_ID',
+      'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
+      'NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID',
+      'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
+      'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+      'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
+    ])
   })
 
   it('rejects a Firebase project that is not the shared RC1 backend', () => {
