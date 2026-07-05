@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest --run",
-    "test:rules": "cd .. && firebase emulators:exec --only firestore \"cd web && npx vitest run src/firebase/firestore-rules.test.ts\""
+    "test:rules": "cd .. && firebase emulators:exec --only firestore \"cd web && npx vitest run src/firebase/firestore-rules.test.ts\"",
+    "admin:grant-coach": "tsx scripts/grant-coach-access.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
@@ -29,8 +30,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "firebase-admin": "^14.1.0",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.0",
     "typescript": "^5",
     "vitest": "^4.1.9"
   }
