@@ -5,6 +5,7 @@ export type FirebaseClientEnv = {
   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET?: string
   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID?: string
   NEXT_PUBLIC_FIREBASE_APP_ID?: string
+  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID?: string
 }
 
 export type FirebaseClientConfig = {
@@ -14,6 +15,7 @@ export type FirebaseClientConfig = {
   storageBucket: string
   messagingSenderId: string
   appId: string
+  measurementId?: string
 }
 
 const requiredKeys = [
@@ -44,6 +46,7 @@ export function resolveFirebaseClientConfig(env?: FirebaseClientEnv): FirebaseCl
     storageBucket: readRequiredFirebaseEnv(source, 'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
     messagingSenderId: readRequiredFirebaseEnv(source, 'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
     appId: readRequiredFirebaseEnv(source, 'NEXT_PUBLIC_FIREBASE_APP_ID'),
+    measurementId: source.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || undefined,
   }
 }
 
